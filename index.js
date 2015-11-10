@@ -42,6 +42,16 @@ newX = height - oldY
 newY = oldX
 */
 function rotate90 (img) {
+  for (var i = 1; i <= ((img.height / 2) * 4); i++) {
+    for (var ii = 1; ii <= ((img.width / 2) * 4); ii++) {
+      var rgba = img.data[(i * (img.width * 4)) + ii];
+      var oldY = i;
+      var oldX = ii;
+
+      for (var x = 0; x < 4; x++) {
+      }
+    }
+  }
 }
 
 /*
@@ -183,6 +193,7 @@ var date = Date.now();
 //var inputFilePath = path.join(__dirname,'images','rainbowSheep.png')
 //var outputFilePath = path.join(__dirname,'images','out',Date.now()+'.png')
 var inputFilePath = './images/rainbowSheep.png'
+//var inputFilePath = './images/thing.png'
 var outputFilePath = './images/out/' + String(date) + '.png'
 
 fs.createReadStream(inputFilePath)
