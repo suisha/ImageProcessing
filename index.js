@@ -35,12 +35,6 @@ var img = {
 }
 
 /*
-12345
-67890
-abcde
-fghij
-klmno
-
 Go through the top left quadrant of the grid (width / 2, height / 2)
 
 For each pixel, perform a rotation:
@@ -50,9 +44,16 @@ newX = height - oldY
 newY = oldX
 */
 function rotate90 (img) {
-  for (var i = 0; i < ((img.height / 2) * 4); i++) {
-    for (var ii = 0; ii < ((img.width / 2) * 4); ii++) {
-      var rgba = img.data[(i * (img.width * 4)) + ii];
+  for (var i = 0; i < (img.height / 2); i++) {
+    for (var ii = 0; ii < (img.width / 2); ii++) {
+      var start = (i * (img.width * 4)) + (ii * 4);
+
+      var rgba = [
+        img.data[start],
+        img.data[start + 1],
+        img.data[start + 2],
+        img.data[start + 3]
+      ]
 
       var oldY = i;
       var oldX = ii;
@@ -60,8 +61,15 @@ function rotate90 (img) {
       for (var x = 0; x < 4; x++) {
         var newX = (img.height - 1) - oldY;
         var newY = oldX;
-        var swap = img.data[(newY * (img.width * 4)) + newX];
-        img.data[(newY * (img.width * 4)) + newX] = rgba;
+        var swapStart = (newY * (img.width * 4)) + (newX * 4);
+
+        var swap = [];
+
+        for (var s = 0; s < 4; s++) {
+          swap.push(img.data[swapStart + s]);
+          img.data[swapStart + s] = rgba[s];
+        }
+
         rgba = swap;
         oldX = newX;
         oldY = newY;
