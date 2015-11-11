@@ -7,7 +7,8 @@ function processImage (img) {
   //foo(greyscale(img), greyscale2(img));
   //greyscale(img);
   //invertColors(img);
-  flipVertical(img);
+  //flipVertical(img);
+  rotate90(img);
 
   /*
   var pixels = genPixels(img);
@@ -26,6 +27,13 @@ function processImage (img) {
   */
 }
 
+var img = {
+  data: [
+    1, 2, 3, 4, 5, 6, 7, 8,
+    9, 10, 11, 12, 13, 14, 15, 16,
+  ]
+}
+
 /*
 12345
 67890
@@ -42,16 +50,26 @@ newX = height - oldY
 newY = oldX
 */
 function rotate90 (img) {
-  for (var i = 1; i <= ((img.height / 2) * 4); i++) {
-    for (var ii = 1; ii <= ((img.width / 2) * 4); ii++) {
+  for (var i = 0; i < ((img.height / 2) * 4); i++) {
+    for (var ii = 0; ii < ((img.width / 2) * 4); ii++) {
       var rgba = img.data[(i * (img.width * 4)) + ii];
+
       var oldY = i;
       var oldX = ii;
 
       for (var x = 0; x < 4; x++) {
+        var newX = (img.height - 1) - oldY;
+        var newY = oldX;
+        var swap = img.data[(newY * (img.width * 4)) + newX];
+        img.data[(newY * (img.width * 4)) + newX] = rgba;
+        rgba = swap;
+        oldX = newX;
+        oldY = newY;
       }
     }
   }
+
+  return img;
 }
 
 /*
