@@ -8,7 +8,8 @@ function processImage (img) {
   //greyscale(img);
   //invertColors(img);
   //flipVertical(img);
-  rotate90(img);
+  //rotate90(img);
+  flipHorizontal(img);
 
   /*
   var pixels = genPixels(img);
@@ -28,11 +29,35 @@ function processImage (img) {
 }
 
 var img = {
+  width: 2,
+  height: 2,
   data: [
     1, 2, 3, 4, 5, 6, 7, 8,
     9, 10, 11, 12, 13, 14, 15, 16,
   ]
 }
+
+function flipHorizontal (img) {
+
+  for (var y = 0; y < img.height; y++) {
+    for (var x = 0; x < img.width / 2; x++) {
+      var newX = img.width - x - 1;
+
+      for (var i = 0; i < 4; i++) {
+        var currIndex = (y * img.width + x) * 4 + i;
+        var swapIndex = (y * img.width + newX) * 4 + i;
+
+        var swap = img.data[swapIndex];
+        img.data[swapIndex] = img.data[currIndex];
+        img.data[currIndex] = swap;
+      }
+    }
+  }
+
+  return img;
+}
+
+//console.log(flipHorizontal(img));
 
 /*
 Go through the top left quadrant of the grid (width / 2, height / 2)
@@ -197,11 +222,6 @@ function tintRed (img) {
 
   return img;
 }
-
-
-function flipHorizontal (img) {}
-
-
 
 function blur (img, blurFactor) {}
 
